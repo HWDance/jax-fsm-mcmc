@@ -51,43 +51,9 @@ def step(k, z):
     z = lax.switch(k, [S_1, ..., S_K], z)
     k = lax.switch(k, [delta(1, z), ..., delta(K, z)])
     return k, z, is_sample
-
-## Performance Considerations
-
-This section explains why combining `jax.vmap` with data-dependent loops introduces a synchronization barrier and offers guidance on writing efficient, batched control flows.
-
-### 1. Why the `vmap` + `while` Barrier Occurs
-
-When you wrap a Python `while` loop (or any `lax.while_loop`) in `jax.vmap`, JAX lowers your loop to a single XLA `While` operation whose body processes the *entire* batch in lockstep. Each iteration of the loop cannot proceed until *all* batch elements have finished their current iteration, creating an implicit synchronization barrier:
-
-```python
-import jax
-import jax.numpy as jnp
-
-def f(x):
-    def cond(state):
-        i, x = state
-        return i < 10
-    def body(state):
-        i, x = state
-        return i + 1, x + jnp.sin(x)
-    return jax.lax.while_loop(cond, body, (0, x))[1]
-
-batched_f = jax.vmap(f)
 ```
 
-Under the hood, this compiles to one XLA `While` op over a shape `[batch, ...]` tensor, enforcing that all batch lanes advance in lockstep.
-
-### 2. Fundamental Nature
-
-This behavior is not a JAX bug—it's a consequence of how Python control flow is traced and lowered into XLA HLO:
-
-* **Single HLO loop**: The entire loop (for all inputs) becomes one XLA op.
-* **Batched execution**: `vmap` lifts that op to operate on a batched shape, so barrier semantics follow naturally.
-
-Unless XLA introduces per-lane streaming loops, any data-dependent loop under `vmap` will serialize across the batch dimension.
-
-### 3. Runtime Driver
+### 3. Runtime driver
 
 To generate **N** samples per chain without intermediate barriers, we implement a simple driver that repeatedly calls `vmap(step)` until each chain has produced N samples:
 
