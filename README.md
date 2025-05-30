@@ -29,7 +29,7 @@ def f(x):
 batched_f = jax.vmap(f)
 ```
 
-Under the hood, this compiles to one XLA `While` op over a shape `[batch, ...]` tensor, enforcing that all batch lanes advance in lockstep. This behavior is not a JAX bug—it's a consequence of how Python control flow is traced and lowered into XLA HLO:
+Under the hood, this compiles to one XLA `While` op over a shape `[batch, ...]` tensor, enforcing that all batch lanes advance in lockstep. This behavior is not a JAX bug, but rather a consequence of how Python control flow is traced and lowered into XLA HLO:
 
 * **Single HLO loop**: The entire loop (for all inputs) becomes one XLA op.
 * **Batched execution**: `vmap` lifts that op to operate on a batched shape, so barrier semantics follow naturally.
