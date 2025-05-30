@@ -1,4 +1,4 @@
-# JAX-FSM-MCMC: vectorized MCMC algorithms without synchronization barriers
+# JAX-FSM-MCMC: Vectorized MCMC algorithms without synchronization barriers
 
 This repository contains JAX implementations of several stochastic-length proposal MCMC algorithms (i.e. HMC-NUTS and Slice sampling variants) for more efficient execution on SIMD architectures, when vectorizating with `vmap`. The implementation method is based on the paper "Efficiently Vectorized MCMC on Modern Accelerators" [https://www.arxiv.org/abs/2503.17405](url). 
 
