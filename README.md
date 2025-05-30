@@ -36,4 +36,22 @@ Under the hood, this compiles to one XLA `While` op over a shape `[batch, ...]` 
 
 Unless XLA introduces per-lane streaming loops, any data-dependent loop under `vmap` will serialize across the batch dimension.
 
+## Our Solution: FSM-Based Desynchronization
+
+To avoid the per-iteration sync barrier when vectorizing data-dependent loops, we model the single-chain `sample` kernel as a Finite State Machine (FSM) and drive it using a lightweight `step` function under `vmap`.
+
+### 1. FSM Construction
+- **Block decomposition**: Split the original `sample` code at each `while`-loop boundary into K contiguous blocks `S₁, …, S_K`.  
+- **States & transitions**: Each block `S_k` is a pure function on program state `z`, and a transition function δ(k, z) determines the next block based on loop-termination conditions :contentReference[oaicite:0]{index=0}.
+
+### 2. Runtime `step` Function
+```python
+def step(k, z):
+    is_sample = (k == K)            # flag when final block executes
+    z = lax.switch(k, [S₁, …, S_K], z)
+    k = lax.switch(k, [δ(1, z), …, δ(K, z)])
+    return k, z, is_sample
+
+
+
 
