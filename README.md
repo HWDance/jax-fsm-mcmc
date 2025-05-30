@@ -41,17 +41,16 @@ Unless XLA introduces per-lane streaming loops, any data-dependent loop under `v
 To avoid the per-iteration sync barrier when vectorizing data-dependent loops, we model the single-chain `sample` kernel as a Finite State Machine (FSM) and drive it using a lightweight `step` function under `vmap`.
 
 ### 1. FSM Construction
-- **Block decomposition**: Split the original `sample` code at each `while`-loop boundary into K contiguous blocks `S₁, …, S_K`.  
-- **States & transitions**: Each block `S_k` is a pure function on program state `z`, and a transition function δ(k, z) determines the next block based on loop-termination conditions :contentReference[oaicite:0]{index=0}.
+- **Block decomposition**: Split the original `sample` code at each `while`-loop boundary into K contiguous blocks `S_1, ..., S_K`.  
+- **States & transitions**: Each block `S_k` is a pure function on program state `z`, and a transition function `delta(k, z)` determines the next block based on loop-termination conditions.
 
 ### 2. Runtime `step` Function
 ```python
 def step(k, z):
     is_sample = (k == K)            # flag when final block executes
-    z = lax.switch(k, [S₁, …, S_K], z)
-    k = lax.switch(k, [δ(1, z), …, δ(K, z)])
+    z = lax.switch(k, [S_1, ..., S_K], z)
+    k = lax.switch(k, [delta(1, z), ..., delta(K, z)])
     return k, z, is_sample
-
 
 
 
