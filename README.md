@@ -2,6 +2,12 @@
 
 This repository contains JAX implementations of several `stochastic-length proposal' MCMC algorithms (i.e. HMC-NUTS and Slice sampling variants) for more efficient execution on SIMD architectures, when vectorizating with \texttt{vmap}. The implementation method is based on the paper "Efficiently Vectorized MCMC on Modern Accelerators" [https://www.arxiv.org/abs/2503.17405](url). 
 
+### TL;DR
+
+- **Issue:** Wrapping a data-dependent `while` loop in `jax.vmap` produces a single XLA `While` over the whole batch, so each iteration stalls until **all** batch elements finish—creating a full-batch synchronization barrier.
+
+- **Solution:** We split the computation at each loop boundary into separate blocks, then use `jax.lax.switch` or `jax.lax.cond` to dispatch each block until every chain recovers its required samples. This lets each Markov chain progress through its own state sequence independently, eliminating the synchronization barrier.
+
 ### Why the `vmap` + `while` Barrier Occurs
 
 When you wrap a Python `while` loop (or any `lax.while_loop`) in `jax.vmap`, JAX lowers your loop to a single XLA `While` operation whose body processes the *entire* batch in lockstep. Each iteration of the loop cannot proceed until *all* batch elements have finished their current iteration, creating an implicit synchronization barrier:
