@@ -34,7 +34,7 @@ mala_ess = []
 mala_nsamples = []
 iter_counts = []
 
-def run(seed = 0, nu_chains = 128, max_num_expansions = 10, divergence_threshold = 1000, 
+def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshold = 1000, 
         dataset = "soil_diffrax", num_samples = 1000):
 
     """ logprob constructon """
@@ -104,7 +104,7 @@ def run(seed = 0, nu_chains = 128, max_num_expansions = 10, divergence_threshold
     results_fsm = {'time': fsm_time, 
                  'ess': ess}
     pickle.dump(results_fsm,
-                open('fsm_time_step={0}_samples={1}_dataset={2}_tune={3}.pkl'.format(step_size, num_samples, dataset, tune), 'wb'))
+                open('fsm_time_seed={0}_step={1}_samples={2}_dataset={3}.pkl'.format(seed, step_size, num_samples, dataset, tune), 'wb'))
     
     """ Blackjax nuts https://blackjax-devs.github.io/blackjax/examples/howto_sample_multiple_chains.html """
     rng = jrnd.PRNGKey(seed)
@@ -144,9 +144,11 @@ def run(seed = 0, nu_chains = 128, max_num_expansions = 10, divergence_threshold
                  "accept_rate" : accept_rate.mean(),
                  'ess': ess_bj}
     pickle.dump(results_bj,
-                open('bj_time_step={0}_samples={1}_dataset={2}.pkl'.format(step_size, num_samples, dataset), 'wb'))
+                open('bj_time_seed={0}_step={1}_samples={2}_dataset={3}.pkl'.format(seed, step_size, num_samples, dataset), 'wb'))
     
-     return results_fsm, results_bj   
+    return results_fsm, results_bj   
 
 if __name__ == "__main__":
-    run() 
+    results = []
+    for i in range(3):
+        results.append(run(seed = i))

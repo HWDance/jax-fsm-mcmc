@@ -7,8 +7,8 @@ from jax.scipy.linalg import cho_solve, cholesky
 from functools import partial
 import blackjax
 
-from FSM.mcmc.delayedrejection_in import DelayedRejectionFSM
-from FSM.mcmc.delayedrejection_in_uncondensed import DelayedRejectionFSM as DelayedRejectionFSMunrolled
+from FSM.mcmc.delayedrejection import DelayedRejectionFSM
+from FSM.mcmc.delayedrejection_uncondensed import DelayedRejectionFSM as DelayedRejectionFSMunrolled
 from FSM.base.run_fsm_in import run_fsm, get_fsm_samples, get_fsm_samples_chain, get_fsm_updates
 from FSM.base.run_fsm_in_naive import one_step, inference_loop_multiple_chains
 
@@ -134,5 +134,7 @@ def main(seed=0, runs=1, num_chains=128, num_samples = 10000, num_steps = 100, d
 
 
 if __name__ == "__main__":
-    main()
-    print(iters.max(1).mean(), iters.max(0).mean())
+    results = []
+    for chains in [1,2,4,8,16,32,64,128,256,512,1024]:
+        results.append(main(seed = 0, runs = 10, num_chains = chains))
+    print(results)

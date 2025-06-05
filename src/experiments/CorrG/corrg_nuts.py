@@ -17,22 +17,17 @@ from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples
 from FSM.utils.correlated_MVN import get_logpdf_fn
 
 """ Configs """
-seed = 0
 chain_list = [1,5,20,100,500]
 input_dims = 100
-runs = 1
-corr = 0.99
 step_size = 0.01 * 10 ** 0.5 
 mala_step = 1e-3 
 init_scale = 10 
 max_num_expansions = 10
 divergence_threshold = 1000
 inverse_mass_matrix = jnp.eye(input_dims)
-logprob_fn = jax.jit(get_logpdf_fn(corr, input_dims))
-
 """"""
 
-def main(runs = 5, corr=0.99, num_samples = 1000):
+def main(seed = 0,runs = 5, corr=0.99, num_samples = 1000):
     
     fsm_time = []
     fsm_ess = []
@@ -44,6 +39,8 @@ def main(runs = 5, corr=0.99, num_samples = 1000):
     mala_ess = []
     mala_nsamples = []
     iter_counts = []
+
+    logprob_fn = jax.jit(get_logpdf_fn(corr, input_dims))
     
     for r in range(runs):   
         for num_chains in chain_list:
@@ -78,9 +75,7 @@ def main(runs = 5, corr=0.99, num_samples = 1000):
             naive_time.append(time()-start)
             naive_nsamples.append(num_samples*num_chains)
             iter_counts.append(iters)
-            
-            print(naive_time, accept_rate.mean())
-            
+                        
             """ Blackjax mala https://blackjax-devs.github.io/blackjax/examples/howto_sample_multiple_chains.html """
     
             rng = jrnd.PRNGKey(seed+r)
@@ -112,9 +107,7 @@ def main(runs = 5, corr=0.99, num_samples = 1000):
             )
             mala_time.append(time()-start)
             mala_nsamples.append(num_samples*num_chains)
-            
-            print(mala_time, accept_rate_mala.mean())
-            
+                    
         
             """ FSM """
         
@@ -145,9 +138,7 @@ def main(runs = 5, corr=0.99, num_samples = 1000):
             )
             fsm_time.append(time()-start)
             fsm_nsamples.append(len(samples)*num_chains)
-        
-            print(fsm_time)
-    
+            
         for num_chains in chain_list:
             ess_bjmala = effective_sample_size(samples_bjmala.position, chain_axis = 1,sample_axis = 0)
             ess_bj = effective_sample_size(samples_bj.position, chain_axis = 1,sample_axis = 0)

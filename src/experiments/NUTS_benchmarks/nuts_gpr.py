@@ -34,7 +34,7 @@ mala_ess = []
 mala_nsamples = []
 iter_ounts = []
 
-def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshold = 1000, num_samples = 1000
+def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshold = 1000, num_samples = 1000):
 
     """ logprob constructon """
     # fetch dataset 
@@ -111,12 +111,14 @@ def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshol
                  'ess': bj_ess}
 
     pickle.dump(results_fsm,
-                open('fsm_time_samples={1}_dataset={2}.pkl'.format(step_size, num_samples, "gpr"), 'wb'))
+                open('fsm_time_seed={0}_samples={1}_dataset={2}.pkl'.format(seed,step_size, num_samples, "gpr"), 'wb'))
     
     pickle.dump(results_bj,
-                open('bj_time_samples={1}_dataset={2}.pkl'.format(step_size, num_samples, "gpr"), 'wb'))
+                open('bj_time_seed={0}_samples={1}_dataset={2}.pkl'.format(seed,step_size, num_samples, "gpr"), 'wb'))
     
     return results_fsm, results_bj
 
 if __name__ == "__main__":
-    run() 
+    results = []
+    for i in range(3):
+        results.append(run(seed = i))

@@ -112,12 +112,11 @@ def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshol
     """ Warm-up"""
     
     start = time()
-    if tune:
-        rng_key = jrnd.PRNGKey(seed)
-        warmup = blackjax.window_adaptation(blackjax.nuts, logprob_fn)
-        rng_key, warmup_key, sample_key = jax.random.split(rng_key, 3)
-        (state, parameters), _ = warmup.run(warmup_key, flat_x, num_steps=400)
-        print(parameters)
+    rng_key = jrnd.PRNGKey(seed)
+    warmup = blackjax.window_adaptation(blackjax.nuts, logprob_fn)
+    rng_key, warmup_key, sample_key = jax.random.split(rng_key, 3)
+    (state, parameters), _ = warmup.run(warmup_key, flat_x, num_steps=400)
+    print(parameters)
     print(time() - start)
     step_size = parameters['step_size']
     inverse_mass_matrix = jnp.diag(parameters['inverse_mass_matrix'])#jnp.eye(input_dims)
@@ -205,6 +204,7 @@ def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshol
 
 
 if __name__ == "__main__":
-    run()    
-
+    results = []
+    for i in range(3):
+        results.append(run(seed = i))
     
