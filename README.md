@@ -7,7 +7,6 @@ This repository contains JAX implementations of several stochastic-length propos
 1.[TLDR](#tldr)
 2. [Installation](#installation)  
 3. [Getting Started](#getting-started)  
-   - [Basic Usage](#basic-usage)  
 4. [Reproducing Experiments](#reproducing-experiments)  
 5. [License](#license)
 6. [Citation](#citation)
