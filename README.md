@@ -28,7 +28,7 @@ This repository contains JAX implementations of several stochastic-length propos
     flex-wrap: nowrap;
     justify-content: center;
     /* increase gap from 1rem to 2rem */
-    gap: 2rem;
+    gap: 10rem;
     align-items: flex-start;
 ">
   <img src="FSM_example_.png" style="width:45%;" />
