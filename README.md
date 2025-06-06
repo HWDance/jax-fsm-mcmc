@@ -95,8 +95,6 @@ Now we set up the FSM.
 
 ## Reproducing Experiments
 
-## License
-
 ## Citation
 If you use JAX-FSM-MCMC or the accompanying ICML 2025 paper in your work, please cite it as:
 
@@ -109,5 +107,16 @@ If you use JAX-FSM-MCMC or the accompanying ICML 2025 paper in your work, please
   url       = {https://github.com/hwdance/jax-fsm-mcmc},
 }
 ```
+
+## License
+This project is licensed under the Apache 2.0 License. See the LICENSE file for details.
+
+## Contact
+For questions or feedback, please contact:
+
+Hugh W. Dance,
+PhD Researcher, Machine Learning,
+Gatsby Computational Neuroscience Unit, UCL
+uctphwd@ucl.ac.uk
 
 
