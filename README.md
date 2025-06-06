@@ -17,8 +17,8 @@ This repository contains JAX implementations of several stochastic-length propos
 <br />
 
  <p float="middle">
-  <img src="FSM_example_.png" width="50%" align = "middle" />
-  <img src="NUTS_ESS_.png" width="45%" align = "middle"/>
+  <img src="FSM_example_.png" width="50%" align = "left" />
+  <img src="NUTS_ESS_.png" width="45%" align = "right"/>
   
 </p>
 
