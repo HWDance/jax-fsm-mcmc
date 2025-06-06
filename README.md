@@ -140,7 +140,7 @@ logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
 
-Next we instantiate the FSM and defin the `step` function:
+Next we instantiate the FSM and define the `step` function:
 
 ```python
 # FSM construction
