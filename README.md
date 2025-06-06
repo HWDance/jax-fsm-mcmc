@@ -25,7 +25,7 @@ This repository contains JAX implementations of several stochastic-length propos
 **Solution:** 
 - We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators. These blocks and transition rules define a *finite state machine* (FSM) - see LHS figure below.
 - We use these blocks to define a `step` function which, given a current state $k$ and input variables $z = (x,\log p(x),...)$ to all blocks, (i) checks the current MCMC algorithm block and (ii) uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block to update $z$.
-- Starting from initialization $(z_0$,k=0), we use an outer wrapper to iteratively call `step` until the chain recovers its required samples.
+- Starting from initialization $(z_0,k=0)$, we use an outer wrapper to iteratively call `step` until the chain recovers its required samples.
 - For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples.
 - `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
 
@@ -140,7 +140,7 @@ logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
 
-Next we instantiate the FSM and define the `step` function:
+Instantiate the FSM and define the `step` function:
 
 ```python
 # FSM construction
@@ -153,7 +153,7 @@ fsm = NutsFSM(
              )
 step = jax.vmap(jax.jit(fsm.step))
 ```
-We initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter using the .init() method, which is called on $x = $`init_pos` and `init_rng`
+Initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter using the .init() method, which is called on $x = $`init_pos` and `init_rng`
 
 ```python
 # RNG init
@@ -165,7 +165,7 @@ init_pos = jrnd.normal(pos_rng, (num_chains, input_dims)) * init_scale
 alg_state = jnp.zeros((num_chains,), dtype=int)
 init_inputs = jax.vmap(fsm.init)(init_rng, init_pos)
 ```
-Now we run the FSM for 1000 samples (128 chains).
+Run the FSM for 1000 samples (128 chains).
 ```python
 # Running and storing
 start = time()
