@@ -85,7 +85,7 @@ X, y, key = generate_linear_XY(key, n_samples, x_min=-3.0, x_max=3.0)
 print("X shape:", X.shape)
 print("Y shape:", y.shape)
 
-# Define log-pdf
+# Define log-posterior of covariance hyperparameters
 logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
