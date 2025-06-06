@@ -2,6 +2,17 @@
 
 This repository contains JAX implementations of several stochastic-length proposal MCMC algorithms (i.e. HMC-NUTS and Slice sampling variants) for more efficient execution on SIMD architectures, when vectorizating with `vmap`. The implementation method is based on the paper "Efficiently Vectorized MCMC on Modern Accelerators" [https://www.arxiv.org/abs/2503.17405](https://www.arxiv.org/abs/2503.17405), which is accepted as a Spotlight at ICML 2025. 
 
+## Table of Contents
+
+1.[TLDR](#TL;DR)
+2. [Installation](#installation)  
+3. [Getting Started](#getting-started)  
+   - [Basic Usage](#basic-usage)  
+4. [Reproducing Experiments](#reproducing-experiments)  
+5. [License](#license)
+6. [Citation](#citation)
+7. [Contact](#contact)
+
 ### TL;DR
 
 **Issue:** Wrapping a data-dependent `while` loop in `jax.vmap` produces a single batched `While` operation with an aggregated termination condition for the whole batch, so each iteration stalls until **all** batch elements finish. For MCMC algorithms with such data-dependent while loops (e.g. NUTS, slice samplers), this creates a full-batch synchronization barrier at every sampling step, leading to inefficient vectorized execution.
@@ -35,17 +46,6 @@ This repository contains JAX implementations of several stochastic-length propos
 
   <img src="NUTS_ESS_.png"  style="width:45%; margin-top:20px; margin-left:1rem;" />
 </div>
-
-
-## Table of Contents
-
-1. [Installation](#installation)  
-2. [Getting Started](#getting-started)  
-   - [Basic Usage](#basic-usage)  
-3. [Reproducing Experiments](#reproducing-experiments)  
-4. [License](#license)
-5. [Citation](#citation)
-6. [Contact](#contact)
 
 ## Installation
 
