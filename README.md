@@ -21,6 +21,7 @@ This repository contains JAX implementations of several stochastic-length propos
 
 ### 1. Prerequisites
 requirements.txt
+
 ### 2. Clone and Install this repo
 
 ```bash
@@ -36,10 +37,28 @@ print(jax_fsm_mcmc.__version__)
 ```
 
 ## Getting Started 
-Below is a minimal example showing how to run a simple NUTS chain using the FSM approach. For more advanced usage (slice samplers, customization, etc.), see the API Overview section.
+Below is a minimal example showing how to run a collection of NUTS chains using the FSM approach. For more advanced usage (slice samplers, customization, etc.), see the API Overview section.
 
 
 ### Basic Usage 
+ Import jax, numpy and the FSM machinery we will use to sample MCMC chains with NUTS.
+ 
+```python
+# Basic imports
+import jax
+import jax.numpy as jnp
+import jax.random as jrnd
+import numpy as np
+
+# FSM imports
+from FSM.mcmc.nuts_bundle import NutsFSM # NUTS algorithm in FSM form
+from FSM.base.run_fsm_in import jitted_update # Jitted function to call blocks of the FSM
+from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples # Outer wrapper to get n-samples per chain
+
+# Helper to create log likelihood for GPR
+from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
+```
+
 
 ### API Overview
 
