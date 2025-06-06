@@ -35,7 +35,7 @@ This repository contains JAX implementations of several stochastic-length propos
   
 <div style="text-align: center;">
   <!-- Left image in an inline‐block with right margin -->
-  <span style="display: inline-block; vertical-align: top; margin-right: 2rem;">
+  <span style="display: inline-block; vertical-align: top; margin-right: 5rem;">
     <img src="FSM_example_.png" width="400px" alt="FSM Illustration" />
   </span>
   
