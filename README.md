@@ -106,7 +106,7 @@ Below is a minimal example showing how to run a collection of NUTS chains using 
 
 
 ### Basic Usage 
- We jax, numpy, blackjax and the FSM machinery we will use to sample MCMC chains with NUTS.
+ Imports for sampling MCMC chains with NUTS via our FSM.
  
 ```python
 # Basic imports
