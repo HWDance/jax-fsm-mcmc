@@ -105,6 +105,7 @@ import jax.numpy as jnp
 import jax.random as jrnd
 import numpy as np
 import blackjax
+from time import time
 
 # FSM imports
 from FSM.mcmc.nuts_bundle import NutsFSM # NUTS algorithm in FSM form
@@ -140,7 +141,40 @@ logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
 
-Now we set up the FSM. (to do)
+Next we instantiate the FSM and defin the `step` function:
+
+```python
+# FSM construction
+fsm = NutsFSM(
+              step_size,
+              max_num_expansions,
+              divergence_threshold,
+              inverse_mass_matrix,
+              logprob_fn
+             )
+step = jax.vmap(jax.jit(fsm.step))
+```
+We initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter using the .init() method, which is called on $x = $`init_pos` and `init_rng`
+
+```
+# RNG init
+rng = jrnd.PRNGKey(42)
+init_rng, pos_rng, chain_rng, rng = jrnd.split(rng, 4)
+
+# Initializing position (x), alg state (k=0) and block inputs (z).
+init_pos = jrnd.normal(pos_rng, (num_chains, input_dims)) * init_scale
+alg_state = jnp.zeros((num_chains,), dtype=int)
+init_inputs = jax.vmap(fsm.init)(init_rng, init_pos)
+```
+Now we run the FSM for 1000 samples (128 chains).
+python```
+# Running and storing
+start = time()
+samples, _ = jax.block_until_ready(
+    get_fsm_samples(alg_state, init_inputs, num_chains=128, num_samples=1000, step_fn = step)
+)
+print(time()-start)
+```
 
 
 ## Reproducing Experiments
