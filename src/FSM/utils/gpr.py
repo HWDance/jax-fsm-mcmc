@@ -49,4 +49,12 @@ def logpdf_gp_fn(y, X):
 
     return logpdf_gp
 
-    
+    # Generate data using linear model
+def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
+
+    X = jnp.linspace(x_min, x_max, n)[:,None]
+    key, subkey = jax.random.split(key)
+    U = jax.random.normal(subkey, shape=(n,))
+    Y = X + U
+
+    return X, Y, key
