@@ -64,22 +64,15 @@ from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 
 # Generate data using linear model
 def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
-    """
-    Generate n pairs (X, Y) where:
-      X are linearly spaced between x_min and x_max,
-      U ~ Normal(0, 1),
-      Y = X + U
-    """
     X = jnp.linspace(x_min, x_max, n)
     key, subkey = jax.random.split(key)
     U = jax.random.normal(subkey, shape=(n,))
     Y = X + U
-    
+
     return X, Y, key
 
 key = jax.random.PRNGKey(42)
 n_samples = 500
-
 X, y, key = generate_linear_XY(key, n_samples, x_min=-3.0, x_max=3.0)
 
 print("X shape:", X.shape)
