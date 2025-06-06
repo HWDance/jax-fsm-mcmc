@@ -28,6 +28,7 @@ requirements.txt
 git clone https://github.com/hwdance/jax-fsm-mcmc.git
 cd jax-fsm-mcmc
 pip install -e .
+```
 
 ### 3. Test Installation
 ```python
