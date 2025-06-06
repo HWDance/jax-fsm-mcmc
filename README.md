@@ -24,7 +24,7 @@ This repository contains JAX implementations of several stochastic-length propos
 
 <div style="display:flex; flex-wrap:nowrap; justify-content: space-between; align-items: flex-start;">
   <img src="FSM_example_.png" style="width:48%;" />
-  <img src="NUTS_ESS_.png"  style="width:48%; margin-top:20px; margin-left:-4%;" />
+  <img src="NUTS_ESS_.png"  style="width:48%; margin-top:50px; margin-left:-4%;" />
 </div>
 
  
