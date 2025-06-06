@@ -24,10 +24,14 @@ This repository contains JAX implementations of several stochastic-length propos
   <br />
   
 
-<div style="display:flex; flex-wrap:nowrap; justify-content: space-between; align-items: flex-start;">
+<div style="display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:flex-start;">
+  <!-- First image at “top” -->
   <img src="FSM_example_.png" style="width:48%;" />
 
- <img src="NUTS_ESS_.png"  style="width:48%; margin-top:150px; margin-left:-4%;" />
+  <!-- Wrap second image in a div that has top‐margin -->
+  <div style="margin-top: 20px;">
+    <img src="NUTS_ESS_.png" style="width:48%;" />
+  </div>
 </div>
 
  
