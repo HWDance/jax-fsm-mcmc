@@ -31,6 +31,8 @@ This repository contains JAX implementations of several stochastic-length propos
     align-items: flex-start;
 ">
   <img src="FSM_example_.png" style="width:45%;" />
+
+
   <img src="NUTS_ESS_.png"  style="width:45%; margin-top:20px; margin-left:1rem;" />
 </div>
 
