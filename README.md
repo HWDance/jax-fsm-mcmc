@@ -27,9 +27,21 @@ This repository contains JAX implementations of several stochastic-length propos
     justify-content: space-between;
     align-items: flex-start;
 ">
-  <img src="FSM_example_.png" style="width: 45%; object-fit: contain;" />
-  <img src="NUTS_ESS_.png"  style="width: 45%; object-fit: contain;" />
+  <!-- First image remains at the top of the row -->
+  <img 
+    src="FSM_example_.png" 
+    style="width: 45%;"
+  />
+
+  <!-- Second image: moved down by 20px and shifted left by 10px -->
+  <img 
+    src="NUTS_ESS_.png"  
+    style="width: 45%; 
+           margin-top: 20px; 
+           margin-left: -10px;"
+  />
 </div>
+
  
 
 ## Table of Contents
