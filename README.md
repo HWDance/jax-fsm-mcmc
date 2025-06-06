@@ -56,7 +56,7 @@ from FSM.base.run_fsm_in import jitted_update # Jitted function to call blocks o
 from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples # Outer wrapper to get n-samples per chain
 ```
 
-We will implement nuts to learn the covariance hyperparameter posterior of a Gaussian process $f$, given data $(X_i,Y_i) \sim_{iid} P$ where $Y = f(X) + \xi : \xi \sim N(0,1)$.
+We will implement nuts to learn the covariance hyperparameter posterior of a Gaussian process $f$, given data $(X_i,Y_i) \sim_{iid} P$ where $Y = f(X) + \xi : \xi \sim N(0,1)$. We start off by defining the log-posterior of the covariance hyperparameters $\tau,\eta, \sigma$. The likelihood is $p(y,X|\tau,\eta,\sigma) = N(y|0,K_{XX}(\tau,\eta) + I\sigma^2)$, where $[K_{XX}]_{i,j} = \tau \exp(-\frac{1}{2\eta^2}\|x_i-x_j\|^2)$, and we use standard Gaussian priors $\sigma,\eta,\tau \sim N(0,1)$.
 
 ```python
 # Helper to create log likelihood for GPR
