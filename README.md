@@ -36,57 +36,6 @@ Under the hood, this compiles to one XLA `While` op over a shape `[batch, ...]` 
 
 Unless XLA introduces per-lane streaming loops, any data-dependent loop under `vmap` will serialize across the batch dimension.
 
-## Our Solution: FSM-Based Desynchronization
-
-To avoid the per-iteration sync barrier when vectorizing data-dependent loops, we model the single-chain `sample` kernel as a Finite State Machine (FSM) and drive it using a lightweight `step` function under `vmap`.
-
-### 1. FSM Construction
-- **Block decomposition**: Split the original `sample` code at each `while`-loop boundary into K contiguous blocks `S_1, ..., S_K`.  
-- **States & transitions**: Each block `S_k` is a pure function on program state `z`, and a transition function `delta(k, z)` determines the next block based on loop-termination conditions.
-
-### 2. Runtime `step` Function
-```python
-def step(k, z):
-    is_sample = (k == K)            # flag when final block executes
-    z = lax.switch(k, [S_1, ..., S_K], z)
-    k = lax.switch(k, [delta(1, z), ..., delta(K, z)])
-    return k, z, is_sample
-```
-
-### 3. Runtime driver
-
-To generate **N** samples per chain without intermediate barriers, we implement a simple driver that repeatedly calls `vmap(step)` until each chain has produced N samples:
-
-```python
-import jax
-import jax.numpy as jnp
-from jax import vmap
-
-# step: (k, z) -> (k, z, is_sample)
-
-def runtime_driver(z0, k0, N):
-    """
-    z0: initial states for B chains
-    k0: initial block indices for B chains
-    N: desired number of samples
-    """
-    z = z0
-    k = k0
-    samples = []
-    
-    while len(samples) < N:
-        # advance each chain by one block
-        k, z, is_sample = vmap(step)(k, z)
-        # collect states for chains that finished a sample
-        samples.append(jnp.where(is_sample[:, None], z, jnp.zeros_like(z)))
-    
-    # stack over the sampling dimension: shape [N, B, ...]
-    return jnp.stack(samples, axis=0)
-```
-
-This loop only synchronizes when stacking the final array of samples, eliminating per-iteration barriers.
-
-
 
 
 
