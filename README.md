@@ -15,7 +15,9 @@ This repository contains JAX implementations of several stochastic-length propos
    - [Basic Usage](#basic-usage)  
    - [API Overview](#api-overview)  
 3. [Reproducing Experiments](#reproducing-experiments)  
-4. [License](#license) 
+4. [License](#license)
+5. [Citation](#citation)
+6. [Contact](#contact)
 
 ## Installation
 
@@ -94,5 +96,18 @@ Now we set up the FSM.
 ## Reproducing Experiments
 
 ## License
+
+## Citation
+If you use JAX-FSM-MCMC or the accompanying ICML 2025 paper in your work, please cite it as:
+
+```bibtex
+@inproceedings{dance2025efficiently,
+  title     = {Efficiently Vectorized MCMC on Modern Accelerators},
+  author    = {Dance, Hugh and Glaser, Pierre and Orbanz, Peter and Adams, Ryan},
+  booktitle = {Proceedings of the 42nd International Conference on Machine Learning (iCML 2025)},
+  year      = {2025},
+  url       = {https://github.com/hwdance/jax-fsm-mcmc},
+}
+```
 
 
