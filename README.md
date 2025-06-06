@@ -59,6 +59,29 @@ from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples # Outer
 from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 ```
 
+Generate data from a simple additive process:
+```python
+def generate_Y(key, X):
+    """
+    Sample Y = X + U, where U ~ N(0, 1).
+    """
+    
+    key, subkey = jax.random.split(key)
+    U = jax.random.normal(subkey, shape=X.shape)
+    Y = X + U
+    return Y, key
+```
+
+
+# Example usage
+key = jax.random.PRNGKey(0)
+X = jnp.array([1.0, 2.0, 3.0])
+Y, key = sample_Y(key, X)
+
+print("X:", X)
+print("Y:", Y)
+
+
 
 ### API Overview
 
