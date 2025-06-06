@@ -4,7 +4,7 @@ This repository contains JAX implementations of several stochastic-length propos
 
 ### TL;DR
 
-- **Issue:** Wrapping a data-dependent `while` loop in `jax.vmap` produces a single batched `While` operation with an aggregated termination condition for the whole batch, so each iteration stalls until **all** batch elements finish. For MCMC algorithms with data-dependent while loops (e.g. NUTS, slice samplers), this creates a full-batch synchronization barrier at every sampling step, leading to inefficient vectorized execution.
+- **Issue:** Wrapping a data-dependent `while` loop in `jax.vmap` produces a single batched `While` operation with an aggregated termination condition for the whole batch, so each iteration stalls until **all** batch elements finish. For MCMC algorithms with data-dependent while loops (e.g. NUTS, slice samplers), this creates a full-batch synchronization barrier at every sampling step, leading to inefficient execution when using \verb|vmap|.
 
 - **Solution:** We split the computation at each loop boundary into separate blocks, then use `jax.lax.switch` or `jax.lax.cond` to dispatch each block until every chain recovers its required samples. This lets each Markov chain progress through its own state sequence independently, eliminating the synchronization barrier.
 
