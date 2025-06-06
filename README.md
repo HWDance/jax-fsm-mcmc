@@ -59,17 +59,38 @@ from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples # Outer
 from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 ```
 
-Generate data from a simple additive process:
+Generate data from a simple linear process:
 ```python
-def generate_Y(key, X):
+import jax
+import jax.numpy as jnp
+
+def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
     """
-    Sample Y = X + U, where U ~ N(0, 1).
+    Generate n pairs (X, Y) where:
+      X are linearly spaced between x_min and x_max,
+      U ~ Normal(0, 1),
+      Y = X + U
     """
-    
+    X = jnp.linspace(x_min, x_max, n)
     key, subkey = jax.random.split(key)
-    U = jax.random.normal(subkey, shape=X.shape)
+    U = jax.random.normal(subkey, shape=(n,))
     Y = X + U
-    return Y, key
+    
+    return X, Y, key
+
+# Example usage:
+key = jax.random.PRNGKey(42)
+n_samples = 500
+
+X_lin, Y_lin, key = generate_linear_XY(key, n_samples, x_min=-3.0, x_max=3.0)
+
+print("X_lin.shape:", X_lin.shape)
+print("Y_lin.shape:", Y_lin.shape)
+
+# Show first few values
+print("\nFirst 5 X values:", X_lin[:5])
+print("First 5 Y values:", Y_lin[:5])
+
 ```
 
 
