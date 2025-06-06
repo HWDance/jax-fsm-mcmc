@@ -14,8 +14,8 @@ This repository contains JAX implementations of several stochastic-length propos
 - **Solution:** We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators (see LHS figure below.). We use these blocks to define a `step` function which, given a current state $k$ and input variables $z = (x,\log p(x'),...)$, (i) checks the current MCMC algorithm block and (ii) uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block to update $z$. Starting from initialization $(z_0$,k=0), we use an outer wrapper to iteratively call `step` until the chain recovers its required samples. For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples. `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
 
  <p float="middle">
-  <img src="FSM_example_.png" width="45%" align = "left" />
-  <img src="NUTS_ESS_.png" width="45%" align = "right"/>
+  <img src="FSM_example_.png" width="45%" align = "middle" />
+  <img src="NUTS_ESS_.png" width="45%" align = "middle"/>
   
 </p>
 
