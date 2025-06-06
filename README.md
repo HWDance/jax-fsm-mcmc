@@ -9,7 +9,9 @@ This repository contains JAX implementations of several stochastic-length propos
   **Example:** LHS: The distribution of the number of integration steps needed by the No-U-Turn sampler (NUTS) [Hoffman and Gelman (2014)](https://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf) on a high-dimensional correlated Gaussian Mixture. RHS: The distribution of the *maximum* number of integration steps needed across 500 chains to draw each sample (i.e. the distribution of the \# steps required when running 500 chains with `vmap`). The probability that a chain takes many $(>1000)$ steps is extremely small, but the probability that *at least **one*** chain needs $(>1000)$ steps is nearly one. When using `vmap` to run the chains, they will therefore all have to wait for $>1000$ loop iterations to draw each sample.
 
   ![\# Integration steps taken by HMC NUTS on a correlated Gaussian](HMC_synchprob_.png)
-  
+
+  <br />
+  <br />
 
  <p float="middle">
   <img src="FSM_example_.png" width="45%" align = "right" />  
