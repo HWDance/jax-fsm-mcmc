@@ -111,6 +111,25 @@ Now we set up the FSM.
 
 ## Reproducing Experiments
 
+```bash
+# Run Delayed Rejection Experiment 7.1
+python src/experiments/DR/GaussDR.py
+
+# Run Elliptical Slice Experiment 7.2
+python src/experiments/GPR/GPR_ESS_UCI_in.py # without amortization
+python src/experiments/GPR/GPR_ESS_UCI_in.py # with amortization
+
+# Run NUTS Experiment 7.3
+python src/experiments/CorrG/corrg_nuts.py
+
+# Run NUTS/TESS Experiment 7.4
+python src/experiments/NUTS_benchmarks/nuts_benchmarks.py
+
+# Run NUTS additional benchmarks
+python src/experiments/NUTS_benchmarks/nuts_gpr.py
+python src/experiments/NUTS_benchmarks/nuts_posteriordb.py
+```
+
 ## Citation
 If you use JAX-FSM-MCMC or the accompanying ICML 2025 paper in your work, please cite it as:
 
