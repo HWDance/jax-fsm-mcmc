@@ -38,7 +38,7 @@ This repository contains JAX implementations of several stochastic-length propos
     src="NUTS_ESS_.png"  
     style="width: 45%; 
            margin-top: 10px; 
-           margin-left: -10px;"
+           margin-left: 0px;"
   />
 </div>
 
