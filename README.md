@@ -11,11 +11,6 @@ This repository contains JAX implementations of several stochastic-length propos
   ![\# Integration steps taken by HMC NUTS on a correlated Gaussian](HMC_synchprob_.png)
 
   <br />
-  <br />
-
- <p float="middle">
-  <img src="FSM_example_.png" width="45%" align = "right" />  
-</p>
 
 **Solution:** 
 - We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators. These blocks and transition rules define a *finite state machine* (FSM) - see RHS illustration.
@@ -24,12 +19,13 @@ This repository contains JAX implementations of several stochastic-length propos
 - For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples.
 - `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
 
-
- <p float="middle">
-  <img src="NUTS_ESS_.png" width="45%" align = "right" margin-top:50px />  
-</p>
-
  **Back to The Example:** On the RHS figure we show results when implementating NUTS using our FSM procedure on the high-dimensional correlated Gaussian. When $m=100$ chains are used with `vmap`, our procedure leads to speed-ups of ~10x.
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <img src="FSM_example_.png" width="45%" />
+  <img src="NUTS_ESS_.png" width="45%" />
+</div>
+
  
 
 ## Table of Contents
