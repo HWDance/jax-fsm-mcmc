@@ -99,7 +99,7 @@ Y = X + U
 
 print("X:", X)
 print("Y:", Y)
-PYCODE
+'PYCODE'>>
 
 
 ## Getting Started 
