@@ -11,7 +11,7 @@ This repository contains JAX implementations of several stochastic-length propos
   ![\# Integration steps taken by HMC NUTS on a correlated Gaussian](HMC_synchprob_.png)
   
 
-- **Solution:** We split the computation at each loop boundary into separate blocks (a.k.a. "states") and define a `step` function which uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block based on an internal algorithm state. We then iteratively call `step` until the chain recovers its required samples. For vectorization, we just call `vmap(step)` instead of `step`, and iterate until all chains have collected their samples. `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
+- **Solution:** We split the computation at each loop boundary into separate blocks (a.k.a. "states") which transition to one another based on the while loop terminators. We define a `step` function which (i) checks the current current MCMC  algorithm state and (ii) uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block. We use an outer wrapper to iteratively call `step` until the chain recovers its required samples. For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples. `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
 
  **Illustration:**
   **Back to The Example:** When we 
