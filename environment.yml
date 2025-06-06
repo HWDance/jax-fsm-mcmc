@@ -1,0 +1,32 @@
+name: fsm-mcmc
+channels:
+  - conda-forge
+
+dependencies:
+
+  # -----------------------
+  # 1. conda
+  # -----------------------
+  - python>=3.8            
+  - pip                    
+  - numpy=1.25.*           # compatible with JAX 0.4.x
+  - pandas                 # dataframes used in experiments
+  - matplotlib=3.10.*      # plotting library
+  - ipython=8.31.*         
+
+  # -----------------------
+  # 2. pip
+  # -----------------------
+  - pip:
+      # Install this repository in editable mode:
+      - -e .
+
+      # JAX + JAXLIB
+      - jax==0.4.26
+      - jax-dataclasses==1.6.1
+      - "jaxlib==0.4.26+cuda12.cudnn89 --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html"
+      # - jaxlib==0.4.26 # CPU only option
+      
+      # MCMC libraries
+      - numpyro==0.16
+      - blackjax==1.2.4

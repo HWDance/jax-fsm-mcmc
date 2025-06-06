@@ -21,8 +21,6 @@ from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples
 from FSM.base.run_blackjax import run_blackjax
 from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 
-from distributions import BioOxygen, RegimeSwitchHMM, HorseshoeLogisticReg, PredatorPrey
-
 fsm_time = []
 fsm_ess = []
 fsm_nsamples = []
