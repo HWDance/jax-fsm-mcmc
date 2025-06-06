@@ -16,7 +16,7 @@ from FSM.base.run_fsm_out import run_fsm
 from FSM.base.run_blackjax import run_blackjax
 from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 
-def main(seed=0, data_id=477, num_chains=128, num_samples=1000, burn_in = 0, batch_fn = jax.vmap, num_train = None):
+def main(seed=0, data_id=477, num_chains=128, num_samples=10000, burn_in = 0, batch_fn = jax.vmap, num_train = None):
 
     """ Constructing sampler inputs (rng, data, logprob, pos) """    
 
@@ -94,4 +94,9 @@ def main(seed=0, data_id=477, num_chains=128, num_samples=1000, burn_in = 0, bat
     return obj
 
 if __name__ == "__main__":
-    main()
+    num_chains = [1,2,4,8,16,32,64,128,256,512,1024]
+    results = []
+    for n in num_chains:
+        for s in range(5):
+            results.append(main(seed=s))
+    print(results)

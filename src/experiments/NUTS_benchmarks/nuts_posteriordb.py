@@ -149,6 +149,4 @@ def run(seed = 0, num_chains = 128, max_num_expansions = 10, divergence_threshol
     return results_fsm, results_bj   
 
 if __name__ == "__main__":
-    results = []
-    for i in range(3):
-        results.append(run(seed = i))
+    run()

@@ -27,7 +27,7 @@ divergence_threshold = 1000
 inverse_mass_matrix = jnp.eye(input_dims)
 """"""
 
-def main(seed = 0,runs = 5, corr=0.99, num_samples = 1000):
+def main(seed = 0, runs = 5, corr=0.99, num_samples = 1000):
     
     fsm_time = []
     fsm_ess = []
