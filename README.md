@@ -50,7 +50,19 @@ This repository contains JAX implementations of several stochastic-length propos
 ## Installation
 
 ### 1. Prerequisites
-requirements.txt (to do)
+
+Before you begin, make sure you have:
+
+#### Conda (Miniconda/Anaconda)
+- Tested with Conda ≥ 4.10.
+- If you don’t already have it, install from [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+
+#### CUDA Toolkit & GPU Drivers (optional)
+- If you plan to run on GPU, this repo is tested with **CUDA 12** and **cuDNN 8.9** (for JAX 0.4.26).
+- Verify that your machine has:
+  - NVIDIA GPU with CUDA 12 support
+  - NVIDIA driver ≥ 525.60.13
+- If you do _not_ have a compatible GPU, the environment will fall back to CPU-only JAXLIB.
 
 ### 2. Install Repo
 
