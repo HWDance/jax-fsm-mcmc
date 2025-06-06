@@ -23,19 +23,17 @@ This repository contains JAX implementations of several stochastic-length propos
 
   <br />
   
-<table>
-  <tr>
-    <!-- Left image cell -->
-    <td style="padding-right: 1rem; vertical-align: top;">
-      <img src="FSM_example_.png" width="300px" alt="FSM Illustration" />
-    </td>
+<div style="
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: flex-start;
+">
+  <img src="FSM_example_.png" style="width:45%;" />
+  <img src="NUTS_ESS_.png"  style="width:45%; margin-top:20px; margin-left:1rem;" />
+</div>
 
-    <!-- Right image cell, with top padding to push it down -->
-    <td style="padding-left: 1rem; padding-top: 20px; vertical-align: top;">
-      <img src="NUTS_ESS_.png" width="300px" alt="NUTS ESS Plot" />
-    </td>
-  </tr>
-</table>
 
 ## Table of Contents
 
