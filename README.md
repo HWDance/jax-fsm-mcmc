@@ -15,8 +15,7 @@ This repository contains JAX implementations of several stochastic-length propos
    - [Basic Usage](#basic-usage)  
    - [API Overview](#api-overview)  
 3. [Reproducing Experiments](#reproducing-experiments)  
-4. [Development & Contributing](#development--contributing)  
-5. [License](#license) 
+4. [License](#license) 
 
 ## Installation
 
@@ -42,6 +41,11 @@ Below is a minimal example showing how to run a simple NUTS chain using the FSM 
 
 ### Basic Usage 
 
+### API Overview
 
+
+## Reproducing Experiments
+
+## License
 
 
