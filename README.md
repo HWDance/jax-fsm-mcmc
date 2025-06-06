@@ -146,10 +146,10 @@ Next we instantiate the FSM and defin the `step` function:
 ```python
 # FSM construction
 fsm = NutsFSM(
-              step_size,
-              max_num_expansions,
-              divergence_threshold,
-              inverse_mass_matrix,
+              step_size = 0.01,
+              max_num_expansions=10,
+              divergence_threshold=1000,
+              inverse_mass_matrix=jnp.eye(3),
               logprob_fn
              )
 step = jax.vmap(jax.jit(fsm.step))
