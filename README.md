@@ -41,7 +41,7 @@ This repository contains JAX implementations of several stochastic-length propos
 ## Installation
 
 ### 1. Prerequisites
-requirements.txt
+requirements.txt (to do)
 
 ### 2. Clone and Install this repo
 
@@ -106,7 +106,7 @@ logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
 
-Now we set up the FSM. 
+Now we set up the FSM. (to do)
 
 
 ## Reproducing Experiments
