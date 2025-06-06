@@ -52,7 +52,7 @@ This repository contains JAX implementations of several stochastic-length propos
 ### 1. Prerequisites
 requirements.txt (to do)
 
-### 2. Clone and Install this repo
+### 2. Install Repo
 
 ```bash
 git clone https://github.com/hwdance/jax-fsm-mcmc.git
