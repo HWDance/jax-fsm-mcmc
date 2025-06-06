@@ -160,12 +160,12 @@ Initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter u
 rng = jrnd.PRNGKey(42)
 init_rng, pos_rng, chain_rng, rng = jrnd.split(rng, 4)
 
-# Initializing position (x), alg state (k=0) and block inputs (z).
-init_pos = jrnd.normal(pos_rng, (num_chains, input_dims)) * init_scale
-alg_state = jnp.zeros((num_chains,), dtype=int)
+# Initializing position (x), alg state (k=0) and block inputs (z) (for 128 chains).
+init_pos = jrnd.normal(pos_rng, (128, 3))
+alg_state = jnp.zeros((128,), dtype=int)
 init_inputs = jax.vmap(fsm.init)(init_rng, init_pos)
 ```
-Run the FSM for 1000 samples (128 chains).
+Run the FSM for 1000 samples.
 ```python
 # Running and storing
 start = time()
