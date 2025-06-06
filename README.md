@@ -64,19 +64,43 @@ Before you begin, make sure you have:
   - NVIDIA driver ≥ 535.86
 - If you do _not_ have a compatible GPU, the environment will fall back to CPU-only JAXLIB.
 
-### 2. Install Repo
+### 2. Clone Repo
 
 ```bash
 git clone https://github.com/hwdance/jax-fsm-mcmc.git
 cd jax-fsm-mcmc
-pip install -e .
 ```
 
-### 3. Test Installation
-```python
-import jax_fsm_mcmc
-print(jax_fsm_mcmc.__version__)
+### 3. Create + Activate Conda Environment
+```bash
+conda env create -f environment.yml
+conda activate fsm-mcmc
 ```
+
+
+### 4. Verify Installation
+python - <<'PYCODE'
+import jax, jaxlib
+import jax_fsm_mcmc
+import numpyro, blackjax
+
+print("JAX:", jax.__version__)
+print("JAXLIB:", jaxlib.__version__)
+print("FSM‐MCMC version:", jax_fsm_mcmc.__version__)
+print("NumPyro:", numpyro.__version__)
+print("Blackjax:", blackjax.__version__)
+
+# Tiny test: sample Y = X + U where U ~ N(0,1)
+key = jax.random.PRNGKey(0)
+X = jnp.array([0.0, 1.0, 2.0])
+key, subkey = jax.random.split(key)
+U = jax.random.normal(subkey, shape=X.shape)
+Y = X + U
+
+print("X:", X)
+print("Y:", Y)
+PYCODE
+
 
 ## Getting Started 
 Below is a minimal example showing how to run a collection of NUTS chains using the FSM approach.
