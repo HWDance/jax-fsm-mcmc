@@ -110,6 +110,7 @@ Now we set up the FSM.
 
 
 ## Reproducing Experiments
+Once the repo is git cloned locally, you can re-run the experiments in the paper using the below commands. Note that results and speed-ups using our FSM may depend on the available memory and hardware. We ran our experiments on an NVIDIA A100 GPU with 32GB Memory.
 
 ```bash
 # Run Delayed Rejection Experiment 7.1
