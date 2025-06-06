@@ -79,7 +79,7 @@ conda activate fsm-mcmc
 
 
 ### 4. Verify Installation
-python - <<'PYCODE'
+```python
 import jax, jaxlib
 import jax_fsm_mcmc
 import numpyro, blackjax
@@ -99,8 +99,7 @@ Y = X + U
 
 print("X:", X)
 print("Y:", Y)
-'PYCODE'>>
-
+```
 
 ## Getting Started 
 Below is a minimal example showing how to run a collection of NUTS chains using the FSM approach.
