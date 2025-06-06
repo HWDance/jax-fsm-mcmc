@@ -103,7 +103,7 @@ If you use JAX-FSM-MCMC or the accompanying ICML 2025 paper in your work, please
 ```bibtex
 @inproceedings{dance2025efficiently,
   title     = {Efficiently Vectorized MCMC on Modern Accelerators},
-  author    = {Dance, Hugh and Glaser, Pierre and Orbanz, Peter and Adams, Ryan},
+  author    = {Dance, H., Glaser, P., Orbanz, P. and Adams, R.P.},
   booktitle = {Proceedings of the 42nd International Conference on Machine Learning (iCML 2025)},
   year      = {2025},
   url       = {https://github.com/hwdance/jax-fsm-mcmc},
