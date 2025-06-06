@@ -78,7 +78,6 @@ def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
     
     return X, Y, key
 
-# Example usage:
 key = jax.random.PRNGKey(42)
 n_samples = 500
 
@@ -86,10 +85,6 @@ X_lin, Y_lin, key = generate_linear_XY(key, n_samples, x_min=-3.0, x_max=3.0)
 
 print("X_lin.shape:", X_lin.shape)
 print("Y_lin.shape:", Y_lin.shape)
-
-# Show first few values
-print("\nFirst 5 X values:", X_lin[:5])
-print("First 5 Y values:", Y_lin[:5])
 
 ```
 
