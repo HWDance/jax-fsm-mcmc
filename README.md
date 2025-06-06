@@ -54,16 +54,15 @@ import numpy as np
 from FSM.mcmc.nuts_bundle import NutsFSM # NUTS algorithm in FSM form
 from FSM.base.run_fsm_in import jitted_update # Jitted function to call blocks of the FSM
 from FSM.base.run_fsm_in import get_fsm_samples_chain as get_fsm_samples # Outer wrapper to get n-samples per chain
-
-# Helper to create log likelihood for GPR
-from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 ```
 
-Generate data from a simple linear process:
-```python
-import jax
-import jax.numpy as jnp
+We will implement nuts to learn the covariance hyperparameter posterior of a Gaussian process $f$, given data $(X_i,Y_i) \sim_{iid} P$ where $Y = f(X) + \xi : \xi \sim N(0,1)$.
 
+```python
+# Helper to create log likelihood for GPR
+from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
+
+# Generate data using linear model
 def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
     """
     Generate n pairs (X, Y) where:
@@ -81,21 +80,16 @@ def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
 key = jax.random.PRNGKey(42)
 n_samples = 500
 
-X_lin, Y_lin, key = generate_linear_XY(key, n_samples, x_min=-3.0, x_max=3.0)
+X, y, key = generate_linear_XY(key, n_samples, x_min=-3.0, x_max=3.0)
 
-print("X_lin.shape:", X_lin.shape)
-print("Y_lin.shape:", Y_lin.shape)
+print("X shape:", X.shape)
+print("Y shape:", y.shape)
+
+# Define log-pdf
+logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
 
-
-# Example usage
-key = jax.random.PRNGKey(0)
-X = jnp.array([1.0, 2.0, 3.0])
-Y, key = sample_Y(key, X)
-
-print("X:", X)
-print("Y:", Y)
 
 
 
