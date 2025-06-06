@@ -89,16 +89,6 @@ print("JAXLIB:", jaxlib.__version__)
 print("FSM‐MCMC version:", jax_fsm_mcmc.__version__)
 print("NumPyro:", numpyro.__version__)
 print("Blackjax:", blackjax.__version__)
-
-# Tiny test: sample Y = X + U where U ~ N(0,1)
-key = jax.random.PRNGKey(0)
-X = jnp.array([0.0, 1.0, 2.0])
-key, subkey = jax.random.split(key)
-U = jax.random.normal(subkey, shape=X.shape)
-Y = X + U
-
-print("X:", X)
-print("Y:", Y)
 ```
 
 ## Getting Started 
