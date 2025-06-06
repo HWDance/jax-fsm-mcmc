@@ -4,7 +4,7 @@ This repository contains JAX implementations of several stochastic-length propos
 
 ### TL;DR
 
-- **Issue:** Wrapping a data-dependent `while` loop in `jax.vmap` produces a single batched `While` operation with an aggregated termination condition for the whole batch, so each iteration stalls until **all** batch elements finish. For MCMC algorithms with such data-dependent while loops (e.g. NUTS, slice samplers), this creates a full-batch synchronization barrier at every sampling step, leading to inefficient vectorized execution.
+**Issue:** Wrapping a data-dependent `while` loop in `jax.vmap` produces a single batched `While` operation with an aggregated termination condition for the whole batch, so each iteration stalls until **all** batch elements finish. For MCMC algorithms with such data-dependent while loops (e.g. NUTS, slice samplers), this creates a full-batch synchronization barrier at every sampling step, leading to inefficient vectorized execution.
 
   **Example:** LHS: The distribution of the number of integration steps needed by the No-U-Turn sampler (NUTS) [Hoffman and Gelman (2014)](https://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf) on a high-dimensional correlated Gaussian Mixture. RHS: The distribution of the *maximum* number of integration steps needed across 500 chains to draw each sample (i.e. the distribution of the \# steps required when running 500 chains with `vmap`). The probability that a chain takes many $(>1000)$ steps is extremely small, but the probability that *at least **one*** chain needs $(>1000)$ steps is nearly one. When using `vmap` to run the chains, they will therefore all have to wait for $>1000$ loop iterations to draw each sample.
 
@@ -15,7 +15,12 @@ This repository contains JAX implementations of several stochastic-length propos
   <img src="FSM_example_.png" width="45%" align = "right" />  
 </p>
 
-- **Solution:** We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators (see RHS illustration.). We use these blocks to define a `step` function which, given a current state $k$ and input variables $z = (x,\log p(x'),...)$, (i) checks the current MCMC algorithm block and (ii) uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block to update $z$. Starting from initialization $(z_0$,k=0), we use an outer wrapper to iteratively call `step` until the chain recovers its required samples. For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples. `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
+**Solution:** 
+- We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators (see RHS illustration.).
+- We use these blocks to define a `step` function which, given a current state $k$ and input variables $z = (x,\log p(x'),...)$, (i) checks the current MCMC algorithm block and (ii) uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block to update $z$.
+- Starting from initialization $(z_0$,k=0), we use an outer wrapper to iteratively call `step` until the chain recovers its required samples.
+- For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples.
+- `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
 
 
 
