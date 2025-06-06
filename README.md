@@ -94,9 +94,6 @@ logprob_fn = jax.jit(get_logpdf_fn(y, X))
 Now we set up the FSM. 
 
 
-### API Overview
-
-
 ## Reproducing Experiments
 
 ## Citation
