@@ -64,7 +64,8 @@ from FSM.utils.gpr import logpdf_gp_fn as get_logpdf_fn
 
 # Generate data using linear model
 def generate_linear_XY(key, n, x_min=-3.0, x_max=3.0):
-    X = jnp.linspace(x_min, x_max, n)
+
+    X = jnp.linspace(x_min, x_max, n)[:,None]
     key, subkey = jax.random.split(key)
     U = jax.random.normal(subkey, shape=(n,))
     Y = X + U
