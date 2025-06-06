@@ -18,16 +18,19 @@ This repository contains JAX implementations of several stochastic-length propos
 </p>
 
 **Solution:** 
-- We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators (see RHS illustration.).
+- We split the computation at each loop boundary into separate blocks $S_1,...,S_K$ which transition to one another based on the while loop terminators. These blocks and transition rules define a *finite state machine* (FSM) - see RHS illustration.
 - We use these blocks to define a `step` function which, given a current state $k$ and input variables $z = (x,\log p(x'),...)$, (i) checks the current MCMC algorithm block and (ii) uses `jax.lax.switch` or `jax.lax.cond` to dispatch the relevant block to update $z$.
 - Starting from initialization $(z_0$,k=0), we use an outer wrapper to iteratively call `step` until the chain recovers its required samples.
 - For vectorization, we just call `vmap(step)` instead of `step`, until all chains have collected their samples.
 - `vmap(step)` lets each Markov chain progress through its own set of state sequences independently, eliminating the synchronization barrier.
 
 
+ <p float="middle">
+  <img src="NUTS_ESS_.png" width="45%" align = "right" />  
+</p>
 
- **Illustration:**
-  **Back to The Example:** When we 
+ **Back to The Example:** On the RHS figure we show results when implementating NUTS using our FSM procedure on the high-dimensional correlated Gaussian. When $m=100$ chains are used with `vmap`, our procedure leads to speed-ups of ~10x.
+ 
 
 ## Table of Contents
 
