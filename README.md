@@ -121,7 +121,7 @@ logprob_fn = jax.jit(get_logpdf_fn(y, X))
 
 ```
 
-Instantiate the FSM and define the `step` function:
+We instantiate the FSM and define the `step` function:
 
 ```python
 # FSM construction
@@ -134,7 +134,7 @@ fsm = NutsFSM(
              )
 step = jax.vmap(jax.jit(fsm.step))
 ```
-Initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter using the .init() method, which is called on $x = $`init_pos` and `init_rng`
+We initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter using the .init() method, which is called on $x = $`init_pos` and `init_rng`
 
 ```python
 # RNG init
@@ -146,7 +146,7 @@ init_pos = jrnd.normal(pos_rng, (128, 3))
 alg_state = jnp.zeros((128,), dtype=int)
 init_inputs = jax.vmap(fsm.init)(init_rng, init_pos)
 ```
-Run the FSM for 1000 samples.
+We run the FSM for 1000 samples.
 ```python
 # Running and storing
 start = time()
