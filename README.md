@@ -21,11 +21,14 @@ This repository contains JAX implementations of several stochastic-length propos
 
  **Back to The Example:** On the RHS figure we show results when implementating NUTS using our FSM procedure on the high-dimensional correlated Gaussian. When $m=100$ chains are used with `vmap`, our procedure leads to speed-ups of ~10x.
 
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-  <img src="FSM_example_.png" width="45%" />
-  <img src="NUTS_ESS_.png" width="45%" />
+<div>
+  <span style="display: inline-block; vertical-align: top; width: 48%;">
+    <img src="FSM_example_.png" style="width: 100%; display: block;" />
+  </span>
+  <span style="display: inline-block; vertical-align: top; width: 48%;">
+    <img src="NUTS_ESS_.png" style="width: 100%; display: block;" />
+  </span>
 </div>
-
  
 
 ## Table of Contents
