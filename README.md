@@ -18,7 +18,6 @@ This repository contains JAX implementations of several stochastic-length propos
 1. [Installation](#installation)  
 2. [Getting Started](#getting-started)  
    - [Basic Usage](#basic-usage)  
-   - [API Overview](#api-overview)  
 3. [Reproducing Experiments](#reproducing-experiments)  
 4. [License](#license)
 5. [Citation](#citation)
@@ -44,7 +43,7 @@ print(jax_fsm_mcmc.__version__)
 ```
 
 ## Getting Started 
-Below is a minimal example showing how to run a collection of NUTS chains using the FSM approach. For more advanced usage (slice samplers, customization, etc.), see the API Overview section.
+Below is a minimal example showing how to run a collection of NUTS chains using the FSM approach.
 
 
 ### Basic Usage 
