@@ -156,7 +156,7 @@ step = jax.vmap(jax.jit(fsm.step))
 ```
 We initialize the prng keys, algorithm state ($k=0$) and inputs ($z$) (the latter using the .init() method, which is called on $x = $`init_pos` and `init_rng`
 
-```
+```python
 # RNG init
 rng = jrnd.PRNGKey(42)
 init_rng, pos_rng, chain_rng, rng = jrnd.split(rng, 4)
@@ -167,7 +167,7 @@ alg_state = jnp.zeros((num_chains,), dtype=int)
 init_inputs = jax.vmap(fsm.init)(init_rng, init_pos)
 ```
 Now we run the FSM for 1000 samples (128 chains).
-python```
+```python
 # Running and storing
 start = time()
 samples, _ = jax.block_until_ready(
