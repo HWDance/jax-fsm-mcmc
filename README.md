@@ -82,7 +82,7 @@ print("Blackjax:", blackjax.__version__)
 ```
 
 ## Getting Started 
-Below is a minimal example showing how to run a batch of NUTS chains using our FSM implementation with JAX's `vmap`.
+Below is a minimal example showing how to run NUTS using our FSM implementation with JAX's `vmap`.
 
 
 ### Basic Usage 
